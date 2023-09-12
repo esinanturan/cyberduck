@@ -422,6 +422,9 @@ public abstract class AbstractProtocol implements Protocol {
         if(type == ComparisonService.class) {
             return (T) new DefaultComparisonService(this);
         }
+        if(type == OAuthPrefixService.class) {
+            return (T) new DefaultOAuthPrefixService();
+        }
         return null;
     }
 }
