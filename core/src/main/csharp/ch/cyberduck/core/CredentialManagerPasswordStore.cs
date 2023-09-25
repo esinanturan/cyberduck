@@ -228,16 +228,15 @@ namespace Ch.Cyberduck.Core
             var targetBuilder = new UriBuilder(PreferencesFactory.get().getProperty("application.container.name"), string.Empty);
             var pathBuilder = new StringBuilder();
 
+            int? port;
             string hostname = default;
-            int? port = bookmark.getPort();
             string username = credentials.getUsername();
 
             if (withOAuth && protocol.isOAuthConfigurable())
             {
                 isOAuth = true;
                 OAuthPrefixService oAuthPrefix = new OAuthPrefixServiceFactory().create(bookmark);
-                pathBuilder.AppendFormat(":{0}", oAuthPrefix.getIdentifier());
-                hostname = oAuthPrefix.getHostname();
+                hostname = oAuthPrefix.getIdentifier();
                 port = oAuthPrefix.getNonDefaultPort()?.intValue();
                 username = oAuthPrefix.getUsername();
             }
