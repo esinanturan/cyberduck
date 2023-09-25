@@ -258,7 +258,7 @@ namespace Ch.Cyberduck.Core
 
             if (!string.IsNullOrWhiteSpace(hostname))
             {
-                pathBuilder.AppendFormat(":{0}", hostname);
+                pathBuilder.Append(hostname);
 
                 if (port is int portValue)
                 {
