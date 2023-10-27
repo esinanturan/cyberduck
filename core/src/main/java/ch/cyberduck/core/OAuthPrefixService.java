@@ -1,7 +1,5 @@
 package ch.cyberduck.core;
 
-import javax.annotation.Nullable;
-
 /*
  * Copyright (c) 2002-2023 iterate GmbH. All rights reserved.
  * https://cyberduck.io/
@@ -52,7 +50,6 @@ public interface OAuthPrefixService {
      * @return If default port, returns {@code null}, otherwise returns
      *         {@link #getPort()}.
      */
-    @Nullable
     Integer getNonDefaultPort();
 
     /**
