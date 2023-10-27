@@ -28,11 +28,6 @@ package ch.cyberduck.core;
  */
 public interface OAuthPrefixService {
     /**
-     * Gets a description to insert as User-component into PasswordStore
-     */
-    String getDescription();
-
-    /**
      * Returns the OAuth configured hostname of this bookmark.
      */
     String getHostname();

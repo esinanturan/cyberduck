@@ -23,8 +23,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.net.URI;
-
 public abstract class DefaultHostPasswordStore implements HostPasswordStore {
     private static final Logger log = LogManager.getLogger(DefaultHostPasswordStore.class);
 
@@ -150,7 +148,7 @@ public abstract class DefaultHostPasswordStore implements HostPasswordStore {
         }
         final OAuthPrefixService oAuthPrefix = new OAuthPrefixServiceFactory().create(bookmark);
 
-        final String prefix = oAuthPrefix.getDescription();
+        final String prefix = getOAuthPrefix(bookmark);
         final String hostname = oAuthPrefix.getHostname();
         final int port = oAuthPrefix.getPort();
         final Scheme scheme = oAuthPrefix.getScheme();
@@ -169,6 +167,13 @@ public abstract class DefaultHostPasswordStore implements HostPasswordStore {
             log.warn(String.format("Failure %s searching in keychain", e));
             return OAuthTokens.EMPTY;
         }
+    }
+
+    private static String getOAuthPrefix(final Host bookmark) {
+        if(StringUtils.isNotBlank(bookmark.getCredentials().getUsername())) {
+            return String.format("%s (%s)", bookmark.getProtocol().getDescription(), bookmark.getCredentials().getUsername());
+        }
+        return bookmark.getProtocol().getDescription();
     }
 
     @Override
@@ -206,7 +211,7 @@ public abstract class DefaultHostPasswordStore implements HostPasswordStore {
         if(credentials.isOAuthAuthentication()) {
             final OAuthPrefixService oAuthPrefix = new OAuthPrefixServiceFactory().create(bookmark);
 
-            final String prefix = oAuthPrefix.getDescription();
+            final String prefix = getOAuthPrefix(bookmark);
             final String hostname = oAuthPrefix.getHostname();
             final int port = oAuthPrefix.getPort();
             final Scheme scheme = oAuthPrefix.getScheme();
@@ -256,7 +261,7 @@ public abstract class DefaultHostPasswordStore implements HostPasswordStore {
         if(protocol.isOAuthConfigurable()) {
             final OAuthPrefixService oAuthPrefix = new OAuthPrefixServiceFactory().create(bookmark);
 
-            final String prefix = oAuthPrefix.getDescription();
+            final String prefix = getOAuthPrefix(bookmark);
             final String hostname = oAuthPrefix.getHostname();
             final int port = oAuthPrefix.getPort();
             final Scheme scheme = oAuthPrefix.getScheme();

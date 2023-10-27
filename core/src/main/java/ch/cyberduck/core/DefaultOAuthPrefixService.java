@@ -15,8 +15,6 @@ package ch.cyberduck.core;
  * GNU General Public License for more details.
  */
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * Default OAuth Prefix Service.
  * Will just return fields from passed bookmark.
@@ -28,15 +26,6 @@ public class DefaultOAuthPrefixService implements OAuthPrefixService {
     public DefaultOAuthPrefixService(Host bookmark) {
         this.bookmark = bookmark;
         this.protocol = bookmark.getProtocol();
-    }
-
-    @Override
-    public String getDescription() {
-        if(StringUtils.isNotBlank(bookmark.getCredentials().getUsername())) {
-            return String.format("%s (%s)", bookmark.getProtocol().getDescription(),
-                    bookmark.getCredentials().getUsername());
-        }
-        return bookmark.getProtocol().getDescription();
     }
 
     @Override
