@@ -32,7 +32,7 @@ public class DefaultOAuthPrefixService implements OAuthPrefixService {
 
     @Override
     public String getDescription() {
-        if (StringUtils.isNotBlank(bookmark.getCredentials().getUsername())) {
+        if(StringUtils.isNotBlank(bookmark.getCredentials().getUsername())) {
             return String.format("%s (%s)", bookmark.getProtocol().getDescription(),
                     bookmark.getCredentials().getUsername());
         }
@@ -51,15 +51,13 @@ public class DefaultOAuthPrefixService implements OAuthPrefixService {
 
     @Override
     public Integer getNonDefaultPort() {
-        if (!protocol.isPortConfigurable()) {
+        if(!protocol.isPortConfigurable()) {
             return null;
         }
-
-        final int port = getPort();
-        if (port == protocol.getDefaultPort()) {
+        final int port = this.getPort();
+        if(port == protocol.getDefaultPort()) {
             return null;
         }
-
         return port;
     }
 
