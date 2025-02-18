@@ -15,7 +15,6 @@ package ch.cyberduck.core.smb;
  * GNU General Public License for more details.
  */
 
-import ch.cyberduck.core.AbstractPath.Type;
 import ch.cyberduck.core.AttributedList;
 import ch.cyberduck.core.ListProgressListener;
 import ch.cyberduck.core.ListService;
@@ -66,14 +65,14 @@ public class SMBListService implements ListService {
                     log.debug("Skip {}", f.getFileName());
                     continue;
                 }
-                final EnumSet<Type> type = EnumSet.noneOf(Type.class);
+                final EnumSet<Path.Type> type = EnumSet.noneOf(Path.Type.class);
                 long fileAttributes = f.getFileAttributes();
                 // check for all relevant file types and add them to the EnumSet
                 if((fileAttributes & FileAttributes.FILE_ATTRIBUTE_DIRECTORY.getValue()) != 0) {
-                    type.add(Type.directory);
+                    type.add(Path.Type.directory);
                 }
                 else {
-                    type.add(Type.file);
+                    type.add(Path.Type.file);
                 }
                 final PathAttributes attr = new PathAttributes();
                 attr.setAccessedDate(f.getLastAccessTime().toEpochMillis());
@@ -82,8 +81,8 @@ public class SMBListService implements ListService {
                 attr.setSize(f.getEndOfFile());
                 attr.setDisplayname(f.getFileName());
                 result.add(new Path(directory, filename, type, attr));
-                listener.chunk(directory, result);
             }
+            listener.chunk(directory, result);
         }
         catch(SMBRuntimeException e) {
             throw new SMBExceptionMappingService().map("Listing directory {0} failed", e, directory);
